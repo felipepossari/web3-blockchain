@@ -24,11 +24,11 @@ export default class Block {
         ).toString()
     }
 
-    isValid(): boolean {
-        if (this.index < 0) return false;
+    isValid(lastBlock: Block): boolean {
+        if (lastBlock.index !== this.index - 1) return false;
         if (!this.hash) return false;
         if (!this.data) return false;
-        if (!this.previousHash) return false;
+        if (this.previousHash != lastBlock.hash) return false;
         if (this.timestamp < 1) return false;
         return true;
     }
