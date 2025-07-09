@@ -19,7 +19,7 @@ describe("Blockchain tests", () => {
         const blockchain = new Blockchain();
         const result = blockchain.addBlock(
             new Block(2, "Genesis Block", blockchain.blocks[0].hash));
-        expect(result).toBeFalsy();
+        expect(result.success).toBeFalsy();
     })
 
     test('Should be valid', () => {
@@ -27,7 +27,7 @@ describe("Blockchain tests", () => {
         blockchain.addBlock(
             new Block(1, "Genesis Block", blockchain.blocks[0].hash)
         )
-        expect(blockchain.isValid()).toBeTruthy();
+        expect(blockchain.isValid().success).toBeTruthy();
     })
 
     test('Should not be valid if block is invalid', () => {
@@ -36,6 +36,6 @@ describe("Blockchain tests", () => {
             new Block(1, "Genesis Block", blockchain.blocks[0].hash)
         )
         blockchain.blocks[1].hash = ""
-        expect(blockchain.isValid()).toBeFalsy();
+        expect(blockchain.isValid().success).toBeFalsy();
     })
 })
