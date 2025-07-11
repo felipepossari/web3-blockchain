@@ -32,9 +32,13 @@ export default class Blockchain {
             const currentBlock = this.blocks[i];
             const previousBlock = this.blocks[i - 1];
             const validation = currentBlock.isValid(previousBlock);
-            if (!validation.success) 
-                    return new Validation(false, `Block ${currentBlock.index} is invalid: ${validation.message}`);
+            if (!validation.success)
+                return new Validation(false, `Block ${currentBlock.index} is invalid: ${validation.message}`);
         }
         return new Validation();
+    }
+
+    getBlock(hash: string): Block | undefined {
+        return this.blocks.find(b => b.hash === hash);
     }
 }

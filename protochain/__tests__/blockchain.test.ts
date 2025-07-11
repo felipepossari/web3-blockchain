@@ -38,4 +38,11 @@ describe("Blockchain tests", () => {
         blockchain.blocks[1].hash = ""
         expect(blockchain.isValid().success).toBeFalsy();
     })
+
+
+    test('Should get block', () => {
+        const blockchain = new Blockchain();
+        const block = blockchain.getBlock(blockchain.blocks[0].hash);
+        expect(block).toBeDefined();
+    })
 })
