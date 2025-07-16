@@ -19,7 +19,7 @@ app.get("/status", (req, res, next) => {
     })
 })
 
-app.get('/block/:indexOrHash', (req, res, next) => {
+app.get('/blocks/:indexOrHash', (req, res, next) => {
     let block: Block | undefined;
 
     if (/^[0-9]+$/.test(req.params.indexOrHash)) {
@@ -34,6 +34,22 @@ app.get('/block/:indexOrHash', (req, res, next) => {
         res.json(block);
     }
 });
+
+app.post('/blocks', (req, res, next) => {
+    if (!req.body) {
+        res.sendStatus(400);
+        return
+    }
+
+    const block = new Block(req.body.index, req.body.data, req.body.previousHash);
+    const validation = blockchain.addBlock(block);
+
+    if (validation.success) {
+        res.json(block);
+    } else {
+        res.status(400).json(validation);
+    }
+})
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
