@@ -1,6 +1,8 @@
 import Blockchain from "../src/lib/blockchain";
 import Block from "../src/lib/block";
 
+jest.mock("../src/lib/block");
+
 describe("Blockchain tests", () => {
 
     test('Should has genesis block', () => {
@@ -18,7 +20,7 @@ describe("Blockchain tests", () => {
     test('Should not add block if it is invalid', () => {
         const blockchain = new Blockchain();
         const result = blockchain.addBlock(
-            new Block(2, "Genesis Block", blockchain.blocks[0].hash));
+            new Block(2, "Genesis Block", ""));
         expect(result.success).toBeFalsy();
     })
 
@@ -35,7 +37,7 @@ describe("Blockchain tests", () => {
         blockchain.addBlock(
             new Block(1, "Genesis Block", blockchain.blocks[0].hash)
         )
-        blockchain.blocks[1].hash = ""
+        blockchain.blocks[1].index = -1
         expect(blockchain.isValid().success).toBeFalsy();
     })
 
